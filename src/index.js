@@ -1,23 +1,25 @@
-require("dotenv").config();
-const winston = require("winston");
-const express = require("express");
-const app = express();
+"use strict";
 
-require("../containers/logging")();
-require("../containers/database")();
-require("../containers/routes")(app);
-require("../containers/config")(app);
-require("../containers/validate")();
+require("dotenv").config();
+
+var express = require("express");
+
+var app = express();
+
+var logger = require("./containers/logging");
+
+require("./containers/database")(logger);
+
+require("./containers/routes")(app);
+
+require("./containers/config")(app);
+
+require("./containers/validate")();
 
 app.set("view engine", "pug");
 app.set("views", "./views");
-
-const PORT = process.env.PORT;
-
-const server = app.listen(PORT, () =>
-    winston.info(
-        `Server is running on port ${PORT} and on ${app.get("env")} grounds`
-    )
-);
-
+var PORT = process.env.PORT;
+var server = app.listen(PORT, function () {
+  return logger.info("Server is running on port ".concat(PORT, " and on ").concat(app.get("env"), " grounds"));
+});
 module.exports = server;
