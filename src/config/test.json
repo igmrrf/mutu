@@ -1,9 +1,0 @@
-{
-  "vividly_jwtkey": "JWT_SECRET_KEY",
-  "port": "PORT",
-  "db": "mongodb://localhost/vidly",
-  "mail": {
-    "password": "APP_PASSWORD"
-  },
-  "service": "test"
-}
