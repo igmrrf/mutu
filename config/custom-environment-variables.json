@@ -4,5 +4,15 @@
   "port": "PORT",
   "mail": {
     "password": "APP_PASSWORD"
-  }
+  },
+
+  "default_env": "DEFAULT_ENV",
+  "port": "PORT",
+  "client_id": "CLIENT_ID",
+  "client_secret": "CLIENT_SECRET",
+  "redirect_url": "REDIRECT_URL",
+  "refresh_token": "REFRESH_TOKEN",
+  "mail_email": "MAIL_EMAIL",
+  "database_url": "DATABASE_URL",
+  "jwt_secret": "JWT_SECRET"
 }
