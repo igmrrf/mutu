@@ -1,7 +1,11 @@
 const nodmailer = require('nodemailer');
+require('dotenv').config();
+const sgMail = require('@sendgrid/mail');
+const apiKey = process.env.SENDGRID_API_KEY;
 const { google } = require('googleapis');
 const config = require('config');
 const OAuth2 = google.auth.OAuth2;
+sgMail.setApiKey(apiKey);
 
 const oauth2Client = new OAuth2(
   config.get('client_id'),
@@ -29,7 +33,7 @@ const smtpTransport = nodmailer.createTransport({
     rejectedUnauthorized: false,
   },
 });
-const sendMail = (to, subject, html) => {
+const GoogleSendMail = (to, subject, html) => {
   const mailOptions = {
     from: `MUTU <${config.get('mail_email')}>`,
     to,
@@ -46,4 +50,24 @@ const sendMail = (to, subject, html) => {
   });
 };
 
-module.exports = sendMail;
+const SendGridSendMail = async (recipient, emailSubject, content) => {
+  const msg = {
+    to: 'devclub57@gmail.com',
+    from: 'vuetify@vue.com',
+    subject: emailSubject,
+    html: content,
+  };
+  try {
+    let info = await sgMail.send(msg);
+    console.log(`mail sent succcessfully >>> ${info}`);
+    return info;
+  } catch (error) {
+    console.error(error);
+    if (error.response) {
+      console.error(error.response.body);
+    }
+  }
+};
+
+
+module.exports = {GoogleSendMail, SendGridSendMail};

@@ -9,6 +9,15 @@ const CustomErrorMessage = (err) => {
   return [];
 };
 
+class CustomError extends Error {
+  constructor(statusCode, message, data = []) {
+    super();
+    this.statusCode = statusCode;
+    this.message = message;
+    this.data = data;
+  }
+}
+
 const errorMiddleware = (err, req, res, next) => {
   if (err.statusCode)
     res.status(err.statusCode).json({
@@ -33,4 +42,4 @@ const errorMiddleware = (err, req, res, next) => {
     });
 };
 
-module.exports = errorMiddleware;
+module.exports = { errorMiddleware, CustomError };

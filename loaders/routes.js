@@ -1,7 +1,7 @@
 const cors = require('cors');
 const express = require('express');
 const helmet = require('helmet');
-const errorMiddleware = require('../middlewares/error');
+const { errorMiddleware } = require('../middlewares/error');
 const expresStatusMonitor = require('express-status-monitor');
 const cookieParser = require('cookie-parser');
 const statusMonitor = require('../config/status');
