@@ -1,7 +1,0 @@
-{
-  "name": "My Express app in production",
-  "service": "prod",
-  "scripts": {
-    "start": "node cluster.js"
-  }
-}
