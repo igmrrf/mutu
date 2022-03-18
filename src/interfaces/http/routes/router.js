@@ -1,5 +1,6 @@
 import express, { Router } from "express";
 import cors from "cors";
+import RateLimit from "express-rate-limit";
 import helmet from "helmet";
 import morgan from "morgan";
 import errorHandler from "interfaces/http/middlewares/errorHandler";
@@ -12,7 +13,13 @@ import error404 from "interfaces/http/middlewares/notFoundHandler";
 
 export default ({ config, containerMiddleware }) => {
   const router = Router();
+  const limiter = new RateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 5,
+  });
+
   router.use(helmet());
+  router.use(limiter);
 
   const NODE_ENV = config.get("app.env");
   router.use(morgan(NODE_ENV === "production" ? "combined" : "dev"));
