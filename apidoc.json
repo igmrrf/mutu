@@ -1,0 +1,8 @@
+{
+  "name": "MUTU",
+  "version": "0.0.1",
+  "description": "Your open source company Management software",
+  "title": "Mutu API V1",
+  "url": "http://api.mutu.com/v1",
+  "sampleUrl": "http://127.0.0.1:30124/v1"
+}

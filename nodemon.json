@@ -1,0 +1,7 @@
+{
+  "watch": ["src"],
+  "ext": "js",
+  "ignore": [".git", "node_modules", "src/**/*.spec.js"],
+  "delay": "1000",
+  "exec": "NODE_ENV=development npm run build && node dist/index.js"
+}
