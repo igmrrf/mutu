@@ -21,4 +21,4 @@ fs.readdirSync(__dirname)
       });
   });
 
-export default models;
+export default router;

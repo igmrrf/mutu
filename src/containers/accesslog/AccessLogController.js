@@ -1,7 +1,5 @@
 import { default as BaseController } from "interfaces/http/controllers";
 import { pick } from "lodash";
-const CustomError = require("../../interfaces/http/errors/errorResponse");
-const responseHandler = require("../../interfaces/http/response/successResponse");
 
 class AccessLogController extends BaseController {
   constructor({ createAccesslog, updateAccesslog, deleteAccesslog, getAccesslog, getAccessLogs }) {

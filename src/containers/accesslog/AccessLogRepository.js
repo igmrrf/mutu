@@ -1,6 +1,6 @@
 import ResourceNotFoundError from "interfaces/http/errors/ResourceNotFoundError";
 import ConflictError from "interfaces/http/errors/ConflictError";
-import BaseRepository from "./BaseRepository";
+import { default as BaseRepository } from "base/repositories";
 
 class AccessLogRepository extends BaseRepository {
   constructor({ models: { AccessLog }, currentUser }) {

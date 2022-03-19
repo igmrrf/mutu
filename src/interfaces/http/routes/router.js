@@ -18,15 +18,16 @@ export default ({ config, containerMiddleware }) => {
     max: 5,
   });
 
-  router.use(helmet());
-  router.use(limiter);
-
   const NODE_ENV = config.get("app.env");
   router.use(morgan(NODE_ENV === "production" ? "combined" : "dev"));
 
   const bodyLimit = config.get("app.bodyLimit");
   router.use(express.json({ limit: bodyLimit }));
   router.use(express.urlencoded({ extended: false, limit: bodyLimit }));
+  router.use(helmet());
+  router.use(expresStatusMonitor(statusMonitor));
+  router.use(cookieParser());
+  router.use(limiter);
 
   // SETUP CORS
   const allowedOrigins = config.get("app.allowedOrigins");

@@ -21,7 +21,8 @@
     "docs:api": "echo 'Building REST Docs...' && apidoc -i src/interfaces/http/routes/ -o docs/apidocs",
     "prepare": "husky install",
     "heroku-prebuild": "export NPM_CONFIG_PRODUCTION=false; export NODE_ENV=; NPM_CONFIG_PRODUCTION=false NODE_ENV=development npm install --only=dev --dev",
-    "heroku-postbuild": "export NPM_CONFIG_PRODUCTION=true; export NODE_ENV=production;"
+    "heroku-postbuild": "export NPM_CONFIG_PRODUCTION=true; export NODE_ENV=production;",
+    "generate": "bash src/utils/service/create.sh"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"

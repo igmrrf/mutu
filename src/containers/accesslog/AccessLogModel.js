@@ -1,11 +1,10 @@
-const uniqueValidator = require('mongoose-unique-validator');
-const { Schema, model, SchemaTypes } = require('mongoose');
-require('mongoose-type-email');
+const { Schema, model } = require("mongoose");
+import AccessLog from "./AccessLogEntity";
 
 const accesslogSchema = Schema(
   {
     email: {
-      type: SchemaTypes.Email,
+      type: String,
       required: true,
       trim: true,
       lowercase: true,
@@ -21,7 +20,6 @@ const accesslogSchema = Schema(
   }
 );
 
-accesslogSchema.plugin(uniqueValidator);
-const Accesslog = model('Accesslog', accesslogSchema);
+accesslogSchema.loadClass(AccessLog);
 
-module.exports = Accesslog;
+export default model("Accesslog", accesslogSchema);
