@@ -1,22 +1,23 @@
-const { body, check, query, param } = require("express-validator");
+module.exports = (
+  name
+) => `const { body, check, query, param } = require("express-validator");
 
-class AccessLogValidation {
+class ${name}Validation {
   constructor({ model: { User } }) {
     this.User = User;
   }
 
   create() {
     return [
-      body("email")
-        .isEmail()
+      body("value")
         .notEmpty()
         .custom((value, {}) => {
-          return this.findOne({ email: value }).then((user) => {
-            if (!user) return Promise.reject("Email doesn't below to a user within the organization");
+          return this.findOne({ value: value }).then((value) => {
+            if (!value) return Promise.reject("Value doesn't below to a value within the organization");
             return true;
           });
         }),
-      body("description")
+      body("anotherValue")
         .notEmpty()
         .withMessage("Description Cannot be empty")
         .isLength({ min: 24, max: 1024 })
@@ -26,16 +27,15 @@ class AccessLogValidation {
 
   update() {
     return [
-      body("email")
-        .isEmail()
+      body("value")
         .notEmpty()
         .custom((value, {}) => {
-          return this.findOne({ email: value }).then((user) => {
-            if (!user) return Promise.reject("Email doesn't below to a user within the organization");
+          return this.findOne({ value: value }).then((value) => {
+            if (!value) return Promise.reject("Value doesn't below to a value within the organization");
             return true;
           });
         }),
-      body("description")
+      body("anotherValue")
         .notEmpty()
         .withMessage("Description Cannot be empty")
         .isLength({ min: 24, max: 1024 })
@@ -68,4 +68,5 @@ class AccessLogValidation {
   }
 }
 
-export default AccessLogValidation;
+export default ${name}Validation;
+`;
