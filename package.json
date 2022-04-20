@@ -41,7 +41,7 @@
     "bcrypt": "^5.0.1",
     "chai-as-promised": "^7.1.1",
     "config": "^3.3.6",
-    "convict": "^6.2.1",
+    "convict": "^6.2.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
