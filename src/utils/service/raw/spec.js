@@ -1,5 +1,5 @@
 module.exports = (name) => `import { expect } from "chai";
-import ${name} from "containes/${name.toLowerCase()}/${name}Entity";
+import ${name} from "containers/${name.toLowerCase()}/${name}Entity";
 
 describe("********** ${name} entity ***********", () => {
   it("getPublicFields", () => {

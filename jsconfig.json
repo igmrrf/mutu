@@ -8,6 +8,7 @@
       "test": ["src/test/*"],
       "src": ["src/*"],
       "app": ["src/app/*"],
+      "utils": ["src/utils/*"],
       "config": ["src/config/*"],
       "domain": ["src/domain/*"],
       "base": ["src/base/*"],

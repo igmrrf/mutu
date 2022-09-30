@@ -1,56 +1,34 @@
-const { Schema, model } = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
+import mongoose from "mongoose";
+import Project from "./ProjectEntity";
 
-const projectSchema = Schema(
+const projectSchema = new mongoose.Schema(
   {
-    author: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
+    
+     updated_by: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
     },
-    name: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    modifier: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    },
-    description: {
-      type: String,
-      required: true,
-      minlength: [20, 'Description is too short'],
-      minlength: [1024, 'Description too lengthy'],
-    },
-    price: { type: Number, required: true },
-    costprice: {
-      type: Number,
-      required: true,
-    },
-    category: {
-      type: String,
-      required: true,
-    },
-    barcode: {
-      type: String,
-      required: true,
-    },
-    icon: {
-      type: String,
-      required: true,
-    },
-    taxRate: {
-      type: Number,
+     created_by: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
       required: true,
     },
   },
   {
-    timestamps: true,
+    timestamps: {
+      createdAt: "created_at",
+      updatedAt: "updated_at",
+    },
+    toObject: {
+      virtuals: true,
+      retainKeyOrder: true,
+    },
+    toJSON: {
+      virtuals: true,
+    },
   }
 );
 
-projectSchema.plugin(uniqueValidator);
-const Project = model('Project', projectSchema);
-Project.syncIndexes();
+projectSchema.loadClass(Project);
 
-module.exports = Project;
+export default mongoose.model("Project", projectSchema);

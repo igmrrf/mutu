@@ -6,7 +6,7 @@ import fs from "fs";
 import path from "path";
 
 const getModel = (file) => require(path.join(__dirname, file)).default;
-const models = {};
+const modelsvalues = {};
 
 fs.readdirSync(__dirname)
   .filter((folder) => folder !== "models.js" && fs.lstatSync(`${__dirname}/${folder}`).isDirectory())
@@ -15,9 +15,9 @@ fs.readdirSync(__dirname)
     fs.readdirSync(newDir)
       .filter((file) => file.indexOf("Model.js") > -1)
       .forEach((file) => {
-        const model = require(path.join(newDir, file));
-        models[model.modelName] = model;
+        const model = require(path.join(newDir, file)).default;
+        modelsvalues[model.modelName] = model;
       });
   });
 
-export default models;
+export default modelsvalues;

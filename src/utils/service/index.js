@@ -12,20 +12,24 @@ const modelContent = require("./raw/model")(Cfolder);
 const controllerContent = require("./raw/controller")(Cfolder);
 const specContent = require("./raw/spec")(Cfolder);
 const repositorySpecContent = require("./raw/repository.spec")(Cfolder);
+const mockContent = require("./raw/mockdata")(Cfolder);
 
 function writeIntoFile(dir) {
-  console.log(dir);
-  console.log(process.cwd());
-  console.log(__dirname);
   if (!dir) dir = path.join(process.cwd(), `src/containers/${folder}`);
-  console.log(dir);
 
   fs.readdirSync(dir)
     .filter((file) => file !== "index.js")
     .forEach((file) => {
       if (fs.lstatSync(`${dir}/${file}`).isDirectory()) return writeIntoFile(`${dir}/${file}`);
       file = path.join(dir, file);
-      console.log("File To INPUT: ", file);
+
+      if (file.includes(`MOCK_DATA.js`))
+        fs.writeFile(file, mockContent, (err) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+        });
       if (file.includes(`${Cfolder}.spec.js`))
         fs.writeFile(file, specContent, (err) => {
           if (err) {

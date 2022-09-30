@@ -1,96 +1,48 @@
-const Contract = require('./ContractModel');
-const CustomError = require('../../interfaces/http/errors/errorResponse');
-const responseHandler = require('../../interfaces/http/response/successResponse');
+import BaseController from "interfaces/http/controllers";
+import { pick } from "lodash";
 
-const getContracts = async (req, res, next) => {
-  try {
-    const contracts = await Contract.find().sort({ createdAt: -1 });
-    const count = await Contract.countDocuments({});
-    if (count === 0)
-      return responseHandler(
-        res,
-        200,
-        "There's are no contract(s) in the database"
-      );
-    return responseHandler(
-      res,
-      200,
-      `There are ${count} contract(s)`,
-      contracts
-    );
-  } catch (error) {
-    next(error);
+class ContractController extends BaseController {
+  constructor({ createContract, updateContract, deleteContract, getContract, getContracts }) {
+    super();
+    this.create = createContract;
+    this.update = updateContract;
+    this.delete = deleteContract;
+    this.getOne = getContract;
+    this.get = getContracts;
   }
-};
 
-const createContract = async (req, res, next) => {
-  try {
-    const contract = new Contract({ ...req.body });
-    await contract.save();
-    return responseHandler(res, 201, 'Account Successfully Created', contract);
-  } catch (error) {
-    next(error);
+  async createContract(req, res) {
+    const payload = pick(req.body, ["", ""]);
+    const response = await this.create.execute(payload);
+    return this.responseBuilder.getResponseHandler(res).onSuccess(response, "Contract added successfully");
   }
-};
 
-const updateContract = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const contract = await Contract.findByIdAndUpdate(
-      { _id: id },
-      { $set: { ...req.body } }
-    );
-    if (!contract)
-      return next(new CustomError(404, 'Invalid ID provided for contract'));
-
-    return responseHandler(
-      res,
-      200,
-      'Customer details successfully updated',
-      contract
-    );
-  } catch (error) {
-    next(error);
+  async updateContract(req, res) {
+    const { id: _id } = pick(req.params, ["id"]);
+    const body = pick(req.body, ["", ""]);
+    const payload = { ...body, _id };
+    const response = await this.update.execute(payload);
+    return this.responseBuilder.getResponseHandler(res).onSuccess(response, "Contract udpated successfully");
   }
-};
 
-const getContract = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const contract = await Contract.findById(id);
-    if (!contract)
-      return next(
-        new CustomError(404, "There's no contract with the specified ID")
-      );
-    return responseHandler(
-      res,
-      200,
-      'customer Object containing details',
-      contract
-    );
-  } catch (error) {
-    next(error);
+  async deleteContract(req, res) {
+    const { id: _id } = pick(req.params, ["id"]);
+    const payload = { _id };
+    const response = await this.delete.execute(payload);
+    return this.responseBuilder.getResponseHandler(res).onSuccess(response, "Contract deleted successfully!");
   }
-};
 
-const deleteContract = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const contract = await Contract.findByIdAndDelete(id);
-    if (!contract)
-      return next(
-        new CustomError(404, "There's no contract with the specified ID")
-      );
-    return responseHandler(res, 200, 'customer successfully deleted', contract);
-  } catch (error) {
-    next(error);
+  async getContracts(req, res) {
+    const response = await this.get.execute();
+    return this.responseBuilder.getResponseHandler(res).onSuccess(response, "Contract(s) fetched successfully!");
   }
-};
 
-module.exports = {
-  createContract,
-  updateContract,
-  getContracts,
-  getContract,
-  deleteContract,
-};
+  async getContract(req, res) {
+    const { id: _id } = pick(req.params, ["id"]);
+    const payload = { _id };
+    const response = await this.getOne.execute(payload);
+    return this.responseBuilder.getResponseHandler(res).onSuccess(response, "Contract fetched successfully!");
+  }
+}
+
+export default ContractController;

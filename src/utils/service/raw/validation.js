@@ -1,6 +1,4 @@
-module.exports = (
-  name
-) => `const { body, check, query, param } = require("express-validator");
+module.exports = (name) => `const { body, param } = require("express-validator");
 
 class ${name}Validation {
   constructor({ model: { User } }) {

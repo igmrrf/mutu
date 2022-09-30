@@ -15,8 +15,9 @@ fs.readdirSync(__dirname)
       .filter((file) => file.indexOf("Route.js") > -1)
       .forEach((file) => {
         const endpoint = `/${file.split("Route.js")[0]}`;
-        console.log(endpoint);
+    
         const route = require(path.join(newDir, file)).default;
+       
         router.use(endpoint, route);
       });
   });

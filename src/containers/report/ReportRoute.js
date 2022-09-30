@@ -1,23 +1,79 @@
-const router = require('express').Router();
-const Auth = require('../../middlewares/auth');
-const Admin = require('../../interfaces/http/middlewares/admin');
-const isObjectId = require('../../middlewares/objectId');
-const {
-  createReport,
-  updateReport,
-  getReport,
-  getReports,
-  deleteReport,
-} = require('./ReportController');
+import { Router } from "express";
+import { makeInvoker } from "awilix-express";
+import ReportController from "./ReportController";
+import CheckAuth from "interfaces/http/middlewares/checkAuthentication";
+import MethodNotAllowedHandler from "interfaces/http/middlewares/methodNotAllowed";
+import ReportValidation from "./ReportValidation";
+import validateError from "modules/validator.module";
 
-router.post('/', [Auth, Admin], createReport);
+const router = Router();
+const api = makeInvoker(ReportController);
+const Auth = makeInvoker(CheckAuth);
+const validate = makeInvoker(ReportValidation);
 
-router.put('/:id', [Auth, isObjectId], updateReport);
+/**
+ * @api {post} /report Creates New Report
+ * @apiGroup Report
+ * @apiName Create new Report
+ * @apiDescription creates a new report which automatically inherits the current date
+ * @apiVersion 0.0.1
+ * @apiSuccessExample Success Response:
 
-router.get('/', [Auth, Admin], getReports);
+ */
 
-router.get('/:id', isObjectId, getReport);
+/**
+ * @api {patch} /report/:id Updates Report details
+ * @apiGroup Report
+ * @apiName Updates existing Report
+ * @apiDescription Updates Report
+ * @apiVersion 0.0.1 
+ * @apiSuccessExample Success Response:
+ 
+ */
 
-router.delete('/:id', [Auth, Admin], isObjectId, deleteReport);
+/**
+ * @api {delete} /report/:id Deletes Report
+ * @apiGroup Report
+ * @apiName Delete Report
+ * @apiDescription Deletes a single Report
+ * @apiVersion 0.0.1
+ * @apiParam {:id} Id - Report Id
+ * @apiSuccessExample Success Response:
 
-module.exports = router;
+ */
+
+/**
+ * @api {get} /report - All Report for the day
+ * @apiGroup Report
+ * @apiName Get Report(s)
+ * @apiDescription Gets all report and populates the users involved
+ * @apiVersion 0.0.1
+ * @apiSuccessExample Success Response:
+
+ */
+
+/**
+ * @api {get} /report/:id Gets one Report item
+ * @apiGroup Report
+ * @apiName  Get Report
+ * @apiDescription Gets one report
+ * @apiVersion 0.0.1
+ * @apiParam {:id} Id - Report Id
+ * @apiSuccessExample Success Response:
+
+ */
+
+router
+  .route("/")
+  .get(Auth("isLoggedIn"), api("getReports"))
+  .post(validate("create"), validateError, Auth("isLoggedIn"), api("createReport"))
+  .all(MethodNotAllowedHandler);
+
+router
+  .route("/:id")
+  .delete(Auth("isLoggedIn"), api("deleteReport"))
+  .get(Auth("isLoggedIn"), api("getReport"))
+  .patch(Auth("isLoggedIn"), api("updateReport"))
+  .all(MethodNotAllowedHandler);
+
+export default router;

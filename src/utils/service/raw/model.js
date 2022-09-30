@@ -1,5 +1,5 @@
 module.exports = (name) => `import mongoose from "mongoose";
-import ${name} from "domain/entities/${name}";
+import ${name} from "./${name}Entity";
 
 const ${name.toLowerCase()}Schema = new mongoose.Schema(
   {

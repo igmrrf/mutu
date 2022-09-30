@@ -1,8 +1,6 @@
-module.exports = (
-  name
-) => `import ${name}Repository from "container/repositories/${name}Repository";
+module.exports = (name) => `import ${name}Repository from "containers/${name.toLowerCase()}/${name}Repository";
 import dbHandler from "helpers/testConfig";
-import models from "infra/database/models";
+import models from "containers/models";
 import { expect } from "chai";
 import MOCK_DATA from "./MOCK_DATA";
 

@@ -6,7 +6,14 @@
 
 # 1. Create Route Folder
 mkdir -p -v src/containers/$1/spec
+mkdir -p -v src/app/$1
 
+# 2. Create Crud Files
+touch src/app/$1/Create$2.js
+touch src/app/$1/Delete$2.js
+touch src/app/$1/Get$2.js
+touch src/app/$1/Get$2s.js
+touch src/app/$1/Update$2.js
 
 # 3. Create spec files
 touch src/containers/$1/spec/$2Repository.spec.js

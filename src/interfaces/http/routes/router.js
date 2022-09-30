@@ -3,6 +3,8 @@ import cors from "cors";
 import RateLimit from "express-rate-limit";
 import helmet from "helmet";
 import morgan from "morgan";
+import statusMonitor from "express-status-monitor";
+import cookieParser from "cookie-parser";
 import errorHandler from "interfaces/http/middlewares/errorHandler";
 import v1Routes from "containers/routes";
 import error404 from "interfaces/http/middlewares/notFoundHandler";
@@ -13,7 +15,7 @@ import error404 from "interfaces/http/middlewares/notFoundHandler";
 
 export default ({ config, containerMiddleware }) => {
   const router = Router();
-  const limiter = new RateLimit({
+  const limiter = RateLimit({
     windowMs: 1 * 60 * 1000, // 1 minute
     max: 5,
   });
@@ -25,7 +27,7 @@ export default ({ config, containerMiddleware }) => {
   router.use(express.json({ limit: bodyLimit }));
   router.use(express.urlencoded({ extended: false, limit: bodyLimit }));
   router.use(helmet());
-  router.use(expresStatusMonitor(statusMonitor));
+  router.use(statusMonitor());
   router.use(cookieParser());
   router.use(limiter);
 

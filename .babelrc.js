@@ -18,6 +18,7 @@ const plugins = () => {
         alias: {
           src: "./src/",
           test: "./src/test/",
+          utils: "./src/utils",
           app: "./src/app/",
           base: "./src/base/",
           modules: "./src/modules",

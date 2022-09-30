@@ -15,13 +15,14 @@ class MongoDBManager {
     const auth = config.get("db.auth");
 
     let connectionString = config.get("db.url");
-    console.log("Stirng: ", connectionString);
 
-    if (auth && !connectionString)
-      connectionString = `mongodb+sv://${user}:${password}@${host}/${name}?retryWrites=true&w=majority`;
+    if (auth && !connectionString) {
+      connectionString = `mongodb+srv://${user}:${password}@${host}/${name}?tls=true&authSource=admin&replicaSet=db-mongodb-nyc1-12304`;
+    }
 
     this.connectionString = connectionString;
     this.connection = mongoose.connection;
+    console.log(connectionString);
 
     if (this.config.get("app.env")) mongoose.set("debug", true);
 
@@ -31,7 +32,7 @@ class MongoDBManager {
   }
 
   /**
-   * Cnnects to MongoDB
+   * oCnnects to MongoDB
    * @param {number} poolSize - Connection pool size
    * @param {boolean} autoIndex - Use autoIndex
    * @param {number} numOfRetries - Number of connection retry attempts

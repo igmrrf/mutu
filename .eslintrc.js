@@ -4,7 +4,7 @@ module.exports = {
     node: true,
     mocha: true,
   },
-  extends: ["airbnb-base", "prettier"],
+  extends: ["airbnb-base"],
   globals: {
     Atomics: "readonly",
     SharedArrayBuffer: "readonly",
@@ -14,24 +14,24 @@ module.exports = {
     sourceType: "module",
   },
   rules: {
-    quotes: [2, "double", { avoidEscapte: true }],
+    quotes: [2, "double", { avoidEscape: true }],
     "import/prefer-default-export": "off",
     "class-methods-use-this": "off",
     "max-len": ["warn", { code: 114 }],
     "no-underscore-dangle": [
       "error",
       {
-        allow: ["_id", "_v", "_require"],
+        allow: ["_id", "__v", "_require"],
       },
     ],
-    camelCase: "off",
+    camelcase: "off",
   },
   settings: {
     "import/resolver": {
       "babel-module": {},
       node: {
         paths: ["src"],
-        extenstion: [".js", ".jsx", ".ts", ".tsx"],
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
       },
     },
   },

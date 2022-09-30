@@ -2,11 +2,10 @@
  * Manages application interfaces e.g REST server, gRPC server
  */
 class App {
-  constructor({ httpServer, logger, db, aiRecommend }) {
+  constructor({ httpServer, logger, db }) {
     this.httpServer = httpServer;
     this.logger = logger;
     this.db = db;
-    this.aiRecommend = aiRecommend;
   }
 
   /**
@@ -16,7 +15,6 @@ class App {
   async start() {
     await this.db.connect();
     await this.httpServer.start();
-    await this.aiRecommend.start();
   }
 
   /**
@@ -30,7 +28,6 @@ class App {
           error: err.toString(),
         });
       }
-      await this.aiRecommend.stop();
       await this.db.close();
       process.exit(err ? 1 : 0);
     });

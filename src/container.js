@@ -4,7 +4,6 @@ import config from "config";
 import MongoDB from "base/database/MongoDBManager";
 import mongoDBModels from "containers/models";
 import logger from "base/logger";
-import aiRecommend from "modules/ai.module";
 import routes from "interfaces/http/routes/router";
 import httpServer from "interfaces/http";
 import storageService from "base/storage";
@@ -21,7 +20,7 @@ container.register({
   models: asValue(mongoDBModels),
   httpServer: asClass(httpServer),
   db: asClass(MongoDB).singleton(),
-  aiRecommend: asClass(aiRecommend).singleton(),
+ 
   storageService: asClass(storageService).singleton(),
   paymentService: asClass(paymentService).singleton(),
   containerMiddleware: asValue(scopePerRequest(container)),
