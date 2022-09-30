@@ -3,7 +3,7 @@ FROM node:lts
 WORKDIR /usr/src/app
 # dependencies for post-installl scripts
 
-RUN apk add --update --no-cache python make git g++
+# RUN apk add --update --no-cache python make git g++
 
 RUN apt-get install -y gnupg
 
