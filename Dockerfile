@@ -11,6 +11,8 @@ RUN apt-get install -y gnupg make git g++ python3
 RUN apt-get -yq update && \
      apt-get -yqq install ssh
 
+COPY  ./node_modules /usr/src/app/node_modules
+
 COPY package*.json ./
 
 RUN npm install
@@ -31,3 +33,10 @@ CMD [ "npm", "start" ]
 
 
 
+
+
+
+
+
+
+# TRIGGER BUILD
