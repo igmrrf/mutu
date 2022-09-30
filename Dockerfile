@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 
 # RUN apk add --update --no-cache python make git g++
 
-RUN apt-get install -y gnupg
+RUN apt-get install -y gnupg make git g++ python-is-python3
 
 RUN apt-get -yq update && \
      apt-get -yqq install ssh
