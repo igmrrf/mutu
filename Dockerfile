@@ -1,27 +1,18 @@
-FROM node:14.18.1-alpine as base64
+FROM node:lts
 
-# FROM base as bluebird
-
+WORKDIR /usr/src/app
 # dependencies for post-installl scripts
 
-# RUN apk add 
+RUN apk add --update --no-cache python make git g++
 
-RUN apt-get install -y python make git g++
+RUN apt-get install -y gnupg
 
-# RUN apt-get -yq update && \
-#      apt-get -yqq install ssh
+RUN apt-get -yq update && \
+     apt-get -yqq install ssh
 
-WORKDIR /usr/src/app
-
-COPY package.json ./
+COPY package*.json ./
 
 RUN npm install
-
-# FROM base 
-
-WORKDIR /usr/src/app
-
-# COPY --from=builder /usr/src/app/node_modules ./node_modules
 
 COPY . .
 
@@ -35,3 +26,7 @@ EXPOSE 30124
 CMD [ "npm", "start" ] 
 
 # TRIGGER BUILD
+
+
+
+
