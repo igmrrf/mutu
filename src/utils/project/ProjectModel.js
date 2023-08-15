@@ -1,11 +1,11 @@
-const { Schema, model } = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
+const { Schema, model } = require("mongoose");
+const uniqueValidator = require("mongoose-unique-validator");
 
 const projectSchema = Schema(
   {
     author: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
     name: {
       type: String,
@@ -14,13 +14,13 @@ const projectSchema = Schema(
     },
     modifier: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
     description: {
       type: String,
       required: true,
-      minlength: [20, 'Description is too short'],
-      minlength: [1024, 'Description too lengthy'],
+      minlength: [20, "Description is too short"],
+      minlength: [1024, "Description too lengthy"],
     },
     price: { type: Number, required: true },
     costprice: {
@@ -50,7 +50,7 @@ const projectSchema = Schema(
 );
 
 projectSchema.plugin(uniqueValidator);
-const Project = model('Project', projectSchema);
+const Project = model("Project", projectSchema);
 Project.syncIndexes();
 
 module.exports = Project;

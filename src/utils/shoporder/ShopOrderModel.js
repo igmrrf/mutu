@@ -1,17 +1,17 @@
-const mongoose = require('mongoose');
-require('mongoose-type-email');
+const mongoose = require("mongoose");
+require("mongoose-type-email");
 const uniqueValidator = require("mongoose-unique-validator");
-const AutoIncrement = require('mongoose-sequence')(mongoose);
+const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const shoporderSchema = mongoose.Schema(
   {
     orderId: { type: Number, required: true },
     customer: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Customer',
+      ref: "Customer",
       required: true,
     },
-    driver: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer' },
+    driver: { type: mongoose.Schema.Types.ObjectId, ref: "Customer" },
     contactPhone: {
       type: String,
       trim: true,
@@ -26,8 +26,8 @@ const shoporderSchema = mongoose.Schema(
       trim: true,
       lowercase: true,
       required: true,
-      minlength: [8, 'Email is too short'],
-      maxlength: [100, 'Email provided is too lengthy'],
+      minlength: [8, "Email is too short"],
+      maxlength: [100, "Email provided is too lengthy"],
     },
     pay_type: { type: String },
     transfer_from_bank: {
@@ -90,8 +90,8 @@ const shoporderSchema = mongoose.Schema(
     site: { type: String },
     paymentMethod: { type: String },
     image: { type: String },
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    modifier: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    modifier: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
   {
     timestamps: true,
@@ -99,24 +99,23 @@ const shoporderSchema = mongoose.Schema(
   }
 );
 
-shoporderSchema.plugin(AutoIncrement, { inc_field: 'id' });
+shoporderSchema.plugin(AutoIncrement, { inc_field: "id" });
 
 shoporderSchema.index({
-  stan: 'text',
-  rrn: 'text',
-  auth_id: 'text',
-  receipt_id: 'text',
-  terminal_location: 'text',
-  acquirer: 'text',
-  card_number: 'text',
-  action_taken: 'text',
-  trans_date: 'text',
-  company: 'text',
+  stan: "text",
+  rrn: "text",
+  auth_id: "text",
+  receipt_id: "text",
+  terminal_location: "text",
+  acquirer: "text",
+  card_number: "text",
+  action_taken: "text",
+  trans_date: "text",
+  company: "text",
 });
 
 shoporderSchema.plugin(uniqueValidator);
 
-const ShopOrder = mongoose.model('Shoporder', shoporderSchema);
-
+const ShopOrder = mongoose.model("Shoporder", shoporderSchema);
 
 module.exports = ShopOrder;

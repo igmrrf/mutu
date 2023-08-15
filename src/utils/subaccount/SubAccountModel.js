@@ -1,7 +1,7 @@
-const { Schema, model } = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
+const { Schema, model } = require("mongoose");
+const uniqueValidator = require("mongoose-unique-validator");
 
-var subAccountSchema = new Schema(
+const subAccountSchema = new Schema(
   {
     name: {
       type: String,
@@ -49,7 +49,7 @@ var subAccountSchema = new Schema(
     },
     branch: {
       type: Schema.Types.ObjectId,
-      ref: 'Branch',
+      ref: "Branch",
       required: true,
     },
   },
@@ -57,8 +57,8 @@ var subAccountSchema = new Schema(
 );
 
 subAccountSchema.plugin(uniqueValidator, {
-  message: '{PATH} is expected to be unique',
+  message: "{PATH} is expected to be unique",
 });
 
-const SubAccount = model('SubAccount', subAccountSchema);
+const SubAccount = model("SubAccount", subAccountSchema);
 module.exports = SubAccount;

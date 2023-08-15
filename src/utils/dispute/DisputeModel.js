@@ -1,13 +1,13 @@
-const beautifulValidate = require('mongoose-beautiful-unique-validation');
-const uniqueValidator = require('mongoose-unique-validator');
-const mongoose = require('mongoose');
-const AutoIncrement = require('mongoose-sequence')(mongoose);
+const beautifulValidate = require("mongoose-beautiful-unique-validation");
+const uniqueValidator = require("mongoose-unique-validator");
+const mongoose = require("mongoose");
+const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const disputeSchema = mongoose.Schema(
   {
     customer: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Customer',
+      ref: "Customer",
       required: true,
     },
     txn_amount: { type: Number, required: true },
@@ -47,8 +47,8 @@ const disputeSchema = mongoose.Schema(
     bank_debit_date: { type: Date },
     image: { type: String },
 
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    modifier: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    modifier: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
   {
     timestamps: true,
@@ -56,25 +56,24 @@ const disputeSchema = mongoose.Schema(
   }
 );
 
-disputeSchema.plugin(AutoIncrement, { inc_field: 'dispute_id' });
+disputeSchema.plugin(AutoIncrement, { inc_field: "dispute_id" });
 
 disputeSchema.index({
-  stan: 'text',
-  rrn: 'text',
-  auth_id: 'text',
-  receipt_id: 'text',
-  terminal_location: 'text',
-  acquirer: 'text',
-  card_number: 'text',
-  action_taken: 'text',
-  trans_date: 'text',
-  company: 'text',
+  stan: "text",
+  rrn: "text",
+  auth_id: "text",
+  receipt_id: "text",
+  terminal_location: "text",
+  acquirer: "text",
+  card_number: "text",
+  action_taken: "text",
+  trans_date: "text",
+  company: "text",
 });
 
 disputeSchema.plugin(uniqueValidator);
 disputeSchema.plugin(beautifulValidate);
 
-const Dispute = mongoose.model('dispute', disputeSchema);
-
+const Dispute = mongoose.model("dispute", disputeSchema);
 
 module.exports = Dispute;

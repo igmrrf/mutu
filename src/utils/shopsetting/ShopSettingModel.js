@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-require('mongoose-type-email');
+const mongoose = require("mongoose");
+require("mongoose-type-email");
 const uniqueValidator = require("mongoose-unique-validator");
-const AutoIncrement = require('mongoose-sequence')(mongoose);
+const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const shopsettingSchema = mongoose.Schema(
   {
@@ -12,8 +12,8 @@ const shopsettingSchema = mongoose.Schema(
       trim: true,
       lowercase: true,
       required: true,
-      minlength: [8, 'Email is too short'],
-      maxlength: [100, 'Email provided is too lengthy'],
+      minlength: [8, "Email is too short"],
+      maxlength: [100, "Email provided is too lengthy"],
     },
     phone: {
       type: String,
@@ -29,8 +29,8 @@ const shopsettingSchema = mongoose.Schema(
     state: { type: String },
     zipcode: { type: String },
 
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    modifier: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    modifier: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
   {
     timestamps: true,
@@ -40,5 +40,5 @@ const shopsettingSchema = mongoose.Schema(
 
 shopsettingSchema.plugin(uniqueValidator);
 
-const ShopSetting = mongoose.model('Shopsetting', shopsettingSchema);
+const ShopSetting = mongoose.model("Shopsetting", shopsettingSchema);
 module.exports = ShopSetting;

@@ -1,7 +1,7 @@
-const { Schema, model } = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
+const { Schema, model } = require("mongoose");
+const uniqueValidator = require("mongoose-unique-validator");
 
-var userSchema = new Schema(
+const userSchema = new Schema(
   {
     name: {
       type: String,
@@ -70,12 +70,12 @@ var userSchema = new Schema(
     },
     branch: {
       type: Schema.Types.ObjectId,
-      ref: 'Branch',
+      ref: "Branch",
       required: true,
     },
     contract: {
       type: Schema.Types.ObjectId,
-      ref: 'Contract',
+      ref: "Contract",
       required: true,
     },
   },
@@ -83,8 +83,8 @@ var userSchema = new Schema(
 );
 
 userSchema.plugin(uniqueValidator, {
-  message: '{PATH} is expected to be unique',
+  message: "{PATH} is expected to be unique",
 });
 
-const User = model('User', userSchema);
+const User = model("User", userSchema);
 module.exports = User;

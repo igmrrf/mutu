@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
-const AutoIncrement = require('mongoose-sequence')(mongoose);
+const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const expenseReportSchema = mongoose.Schema(
   {
@@ -11,13 +11,13 @@ const expenseReportSchema = mongoose.Schema(
           minlength: 5,
           maxlength: 100,
           required: true,
-          collation: { locale: 'en', strength: 3 },
+          collation: { locale: "en", strength: 3 },
         },
         description: {
           type: String,
           required: true,
-          minlength: [20, 'Description is too short'],
-          minlength: [1024, 'Description too lengthy'],
+          minlength: [20, "Description is too short"],
+          minlength: [1024, "Description too lengthy"],
         },
         category: { type: String },
         qty: { type: Number },
@@ -34,9 +34,9 @@ const expenseReportSchema = mongoose.Schema(
         image: { type: String },
       },
     ],
-    vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'Contact' },
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    modifier: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    vendor: { type: mongoose.Schema.Types.ObjectId, ref: "Contact" },
+    author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    modifier: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     site: { type: String },
     status: { type: String },
     approvalComment: { type: String },
@@ -65,11 +65,11 @@ const expenseReportSchema = mongoose.Schema(
   }
 );
 
-expenseReportSchema.plugin(AutoIncrement, { inc_field: 'expense_id' });
+expenseReportSchema.plugin(AutoIncrement, { inc_field: "expense_id" });
 
-expenseReportSchema.set('autoIndex', process.env.Node_Env != 'production');
+expenseReportSchema.set("autoIndex", process.env.Node_Env != "production");
 expenseReportSchema.plugin(uniqueValidator);
 
-const ExpenseReport = mongoose.model('ExpenseReport', expenseReportSchema);
+const ExpenseReport = mongoose.model("ExpenseReport", expenseReportSchema);
 
 module.exports = ExpenseReport;

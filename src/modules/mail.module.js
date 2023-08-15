@@ -1,44 +1,43 @@
-const nodmailer = require('nodemailer');
-require('dotenv').config();
-const sgMail = require('@sendgrid/mail');
+const nodemailer = require("nodemailer");
+require("dotenv").config();
+const sgMail = require("@sendgrid/mail");
+
 const apiKey = process.env.SENDGRID_API_KEY;
-const { google } = require('googleapis');
-const config = require('config');
-const OAuth2 = google.auth.OAuth2;
+const { google } = require("googleapis");
+const config = require("config");
+
+const { OAuth2 } = google.auth;
 sgMail.setApiKey(apiKey);
 
-const oauth2Client = new OAuth2(
-  config.get('client_id'),
-  config.get('client_secret'),
-  config.get('redirect_url')
-);
+const oauth2Client = new OAuth2(config.get("client_id"), config.get("client_secret"), config.get("redirect_url"));
 
 oauth2Client.setCredentials({
-  refresh_token: config.get('refresh_token'),
+  refresh_token: config.get("refresh_token"),
 });
 
 const accessToken = oauth2Client.getAccessToken();
 
-const smtpTransport = nodmailer.createTransport({
-  service: 'gmail',
+const smtpTransport = nodemailer.createTransport({
+  service: "gmail",
   auth: {
-    type: 'Oauth2',
-    user: config.get('mail_email'),
-    clientId: config.get('client_id'),
-    clientSecret: config.get('client_secret'),
-    refreshToken: config.get('refresh_token'),
+    type: "Oauth2",
+    user: config.get("mail_email"),
+    clientId: config.get("client_id"),
+    clientSecret: config.get("client_secret"),
+    refreshToken: config.get("refresh_token"),
     accessToken,
   },
   tls: {
     rejectedUnauthorized: false,
   },
 });
+
 const GoogleSendMail = (to, subject, html) => {
   const mailOptions = {
-    from: `MUTU <${config.get('mail_email')}>`,
+    from: `MUTU <${config.get("mail_email")}>`,
     to,
     cc: to,
-    bcc: `${to}, ${config.get('mail_email')}`,
+    bcc: `${to}, ${config.get("mail_email")}`,
     subject,
     generatedTextFromHTML: true,
     html,
@@ -52,13 +51,13 @@ const GoogleSendMail = (to, subject, html) => {
 
 const SendGridSendMail = async (recipient, emailSubject, content) => {
   const msg = {
-    to: 'devclub57@gmail.com',
-    from: 'vuetify@vue.com',
+    to: "devclub57@gmail.com",
+    from: "vuetify@vue.com",
     subject: emailSubject,
     html: content,
   };
   try {
-    let info = await sgMail.send(msg);
+    const info = await sgMail.send(msg);
     console.log(`mail sent succcessfully >>> ${info}`);
     return info;
   } catch (error) {
@@ -70,4 +69,6 @@ const SendGridSendMail = async (recipient, emailSubject, content) => {
 };
 
 
-module.exports = {GoogleSendMail, SendGridSendMail};
+
+
+module.exports = { GoogleSendMail, SendGridSendMail };

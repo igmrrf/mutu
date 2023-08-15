@@ -1,13 +1,13 @@
-const { Schema, model } = require('mongoose');
-const config = require('config');
+const { Schema, model } = require("mongoose");
+const config = require("config");
 
 let ref;
-if (process.env !== 'production') ref = 'User';
+if (process.env !== "production") ref = "User";
 
 const transactionSchema = Schema({
   author: {
     type: Schema.Types.ObjectId,
-    ref: ref,
+    ref,
     required: true,
     index: true,
   },
@@ -41,6 +41,6 @@ const transactionSchema = Schema({
   },
 });
 
-const Transaction = model('Transaction', transactionSchema);
+const Transaction = model("Transaction", transactionSchema);
 
 module.exports = Transaction;
